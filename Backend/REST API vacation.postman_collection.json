@@ -1,0 +1,229 @@
+{
+	"info": {
+		"_postman_id": "45426af8-f293-4c02-9394-a87fc7823d3f",
+		"name": "REST API vacation",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"firstName\": \"Hila\",\r\n    \"lastName\": \"Nave\",\r\n    \"email\": \"exampke@gmail.com\",\r\n    \"password\": \"1\",\r\n    \"roleId\": 2\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:4000/api/register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"batya6415@gmail.com\",\r\n    \"password\": \"by3698\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:4000/api/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Vacations",
+			"item": [
+				{
+					"name": "Add new vacation",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:4000/api/vacations",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"vacations"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get image",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:4000/api/vacations/images/303b03c5-88ce-4d04-a573-299d55ea0324.jpg",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"vacations",
+								"images",
+								"303b03c5-88ce-4d04-a573-299d55ea0324.jpg"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update vacation",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": " {\r\n        \"destination\": \"Polin\",\r\n        \"description\": \"Ozud Falls\\r\\nNorth of the city of Marrakesh, somewhere in the Middle Atlas Mountains, is a real natural gem that is considered a must-see attraction for all nature lovers visiting Morocco. Ozud Falls are spectacular waterfalls that are about 600 meters high. There.\",\r\n        \"startDate\": \"2023-06-29T21:00:00.000Z\",\r\n        \"endDate\": \"2023-07-07T21:00:00.000Z\",\r\n        \"price\": 4500,\r\n        \"image\": \"\"\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:4000/api/vacations/14",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"vacations",
+								"14"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all vacation",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:4000/api/vacations",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"vacations"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete vacation",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": " {\r\n        \"destination\": \"China\",\r\n        \"description\": \"Ozud Falls\\r\\nNorth of the city of Marrakesh, somewhere in the Middle Atlas Mountains, is a real natural gem that is considered a must-see attraction for all nature lovers visiting Morocco. Ozud Falls are spectacular waterfalls that are about 600 meters high. There you can find many olive trees that complete the pastoral look. The water pours into the El Abid River Canyon and at the bottom of the falls there are stalls where you can buy souvenirs as well as food and drinks.\",\r\n        \"startDate\": \"2023-06-25T21:00:00.000Z\",\r\n        \"endDate\": \"2023-07-08T21:00:00.000Z\",\r\n        \"price\": 3500,\r\n        \"image\": \"\"\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:4000/api/vacations/15",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"vacations",
+								"15"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJJZCI6NCwiZmlyc3ROYW1lIjoiYmF0eWEiLCJsYXN0TmFtZSI6InllcnVzaGFsbWkiLCJlbWFpbCI6ImJhdHlhNjQxNUBnbWFpbC5jb20iLCJwYXNzd29yZCI6ImJ5MzY5OCIsInJvbGVJZCI6MX0sImlhdCI6MTY4MjE5ODczOCwiZXhwIjoxNjgyMjA5NTM4fQ.so-6DGuymco66SPZciCMtcXboi2eddI5Tg2BlQ6TZuk",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

@@ -1,3 +1,6 @@
+import Joi from "joi";
+import { ValidationError } from "./client-errors";
+
 class CredentialsModel {
 
     public email: string;
@@ -8,7 +11,16 @@ class CredentialsModel {
         this.password = credentials.password;
     }
 
-    // TODO: Validation...
+    private static loginValidationSchema = Joi.object({
+        email: Joi.string().required().email(),
+        password: Joi.string().min(4).required()
+    });
+
+    public validateLogin(): void {
+        
+        const result = CredentialsModel.loginValidationSchema.validate(this);
+        if(result.error) throw new ValidationError(result.error.message);
+    }
 
 }
 

@@ -9,7 +9,8 @@ import CredentialsModel from "../2-models/credentials-model";
 ///Register new user :
 async function register(user: UserModel): Promise<string>{
 
-    //1.TODO  joi validation ....
+    //Validate for register
+    user.validateRegister();
 
     //2.check if email that user enter is empty : and send him message if email not empty
     const isTaken = await isEmailTaken(user.email);
@@ -18,10 +19,10 @@ async function register(user: UserModel): Promise<string>{
     //Set all user like regular user:
     user.roleId = RoleModel.User;
 
-    //create query :
+    //create query:
     const sql = `INSERT INTO users VALUES(DEFAULT , ?,?,?,?,?)`;
 
-    //Execute
+    //Execute:
     const result : OkPacket = await dal.execute(sql,[
         user.firstName , user.lastName, user.email, user.password, user.roleId]);
 
@@ -54,7 +55,8 @@ async function isEmailTaken(email: string): Promise<boolean>{
 //Login - for credentials user 
 async function login(credentials: CredentialsModel): Promise<string>{
 
-    //TODO : joi validation 
+    //validate for login
+    credentials.validateLogin(); 
 
     const sql = `SELECT * FROM users WHERE 
                  email = ? AND

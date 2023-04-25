@@ -7,7 +7,7 @@ import verifyAdmin from "../3-middleware/verify-admin";
 
 const router = express.Router();
 
-//GET http://localhost:4000/api/vacations
+//GET http://localhost:4000/api/vacations- only for login
 router.get("/vacations", verifyLoggedIn , async (request: Request, response: Response, next: NextFunction) => {
     try {
         const vacations = await vacationService.getAllVacation();
@@ -18,7 +18,7 @@ router.get("/vacations", verifyLoggedIn , async (request: Request, response: Res
     }
 });
 
-//POST http://localhost:4000/api/vacations
+//POST http://localhost:4000/api/vacations- only for admin
 router.post("/vacations", verifyAdmin ,  async (request: Request, response: Response, next: NextFunction) => {
     try {
 
@@ -36,7 +36,7 @@ router.post("/vacations", verifyAdmin ,  async (request: Request, response: Resp
     }
 });
 
-//PUT http://localhost:4000/api/vacations/:id
+//PUT http://localhost:4000/api/vacations/:id - only for admin
 router.put("/vacations/:id([0-9]+)", verifyAdmin,  async (request: Request, response: Response, next: NextFunction) => {
     try {
         request.body.vacationId = +request.params.id;
@@ -55,7 +55,7 @@ router.put("/vacations/:id([0-9]+)", verifyAdmin,  async (request: Request, resp
     }
 });
 
-//DELETE http://localhost:4000/api/vacations/:id
+//DELETE http://localhost:4000/api/vacations/:id - only for admin
 router.delete("/vacations/:id([0-9]+)", verifyAdmin,  async (request: Request, response: Response, next: NextFunction) => {
     try {
         const id = +request.params.id;

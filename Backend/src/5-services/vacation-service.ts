@@ -27,7 +27,8 @@ async function getAllVacation(): Promise<VacationModel[]> {
 //Add new vacation option to admin : 
 async function addNewVacation(vacation: VacationModel): Promise<VacationModel> {
 
-    //TODO Validation joi
+    //Validation: - Joi - about post 
+    vacation.validatePost();
 
     let imageName = null;
 
@@ -54,10 +55,12 @@ async function addNewVacation(vacation: VacationModel): Promise<VacationModel> {
     return vacation;
 
 }
-//Add new vacation 
+
+//Update vacation 
 async function updateVacation(vacation: VacationModel): Promise<VacationModel> {
 
     //TODO : Validation joi
+    vacation.validatePut();
 
     //Take original image name:
     let imageName = await getVacationImageName(vacation.vacationId);
@@ -96,7 +99,7 @@ async function updateVacation(vacation: VacationModel): Promise<VacationModel> {
     return vacation;
 
 }
-
+//Delete from array 
 async function deleteVacation(id: number): Promise<void> {
 
     //Take original image name:
