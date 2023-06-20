@@ -1,0 +1,7 @@
+.nav-link {
+  color: blue;
+  font-weight: bold;
+  text-decoration: none;
+  display: flex;
+  margin-left: 50px;
+}

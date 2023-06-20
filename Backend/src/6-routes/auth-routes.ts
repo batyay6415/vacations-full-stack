@@ -12,7 +12,7 @@ router.post("/register", async (request: Request, response: Response, next: Next
         const token = await authService.register(user);
         response.status(201).json(token);
     }
-    catch(err: any) {
+    catch (err: any) {
         next(err);
     }
 });
@@ -24,7 +24,7 @@ router.post("/login", async (request: Request, response: Response, next: NextFun
         const token = await authService.login(credentials);
         response.status(201).json(token);
     }
-    catch(err: any) {
+    catch (err: any) {
         next(err);
     }
 });

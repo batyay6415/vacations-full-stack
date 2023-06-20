@@ -7,40 +7,41 @@ import cyber from "../4-utils/cyber";
 import CredentialsModel from "../2-models/credentials-model";
 
 ///Register new user :
-async function register(user: UserModel): Promise<string>{
+async function register(user: UserModel): Promise<string> {
 
     //Validate for register
     user.validateRegister();
 
     //2.check if email that user enter is empty : and send him message if email not empty
     const isTaken = await isEmailTaken(user.email);
-    if(isTaken) throw new ValidationError(`Email ${user.email} already taken`);
+    if (isTaken) throw new ValidationError(`Email ${user.email} already taken`);
 
     //Set all user like regular user:
     user.roleId = RoleModel.User;
+
+    //Hash - password
+    user.password = cyber.hashPassword(user.password);
 
     //create query:
     const sql = `INSERT INTO users VALUES(DEFAULT , ?,?,?,?,?)`;
 
     //Execute:
-    const result : OkPacket = await dal.execute(sql,[
-        user.firstName , user.lastName, user.email, user.password, user.roleId]);
+    const result: OkPacket = await dal.execute(sql, [
+        user.firstName, user.lastName, user.email, user.password, user.roleId]);
 
     ///set back auto-increment id I back to user his id he need it:
     user.userId = result.insertId;
 
     ///create token to user and return token.
     const token = cyber.createToken(user);
-    
+
     //return token:
     return token;
 
 }
 
 //Check if Is email taken:
-async function isEmailTaken(email: string): Promise<boolean>{
-
-    // const sql = `SELECT COUNT(*) > 0 AS email_exists FROM users WHERE email = ?`;
+async function isEmailTaken(email: string): Promise<boolean> {
 
     const sql = `SELECT EXISTS(SELECT * FROM users WHERE email = ?) AS isTaken`;
 
@@ -53,28 +54,28 @@ async function isEmailTaken(email: string): Promise<boolean>{
 }
 
 //Login - for credentials user 
-async function login(credentials: CredentialsModel): Promise<string>{
+async function login(credentials: CredentialsModel): Promise<string> {
 
-    //validate for login
-    credentials.validateLogin(); 
+    //Hash password:
+    credentials.password = cyber.hashPassword(credentials.password);
 
     const sql = `SELECT * FROM users WHERE 
                  email = ? AND
                  password = ?`;
 
-    const users = await dal.execute(sql , [credentials.email, credentials.password]);
+    const users = await dal.execute(sql, [credentials.email, credentials.password]);
 
     const user = users[0];
 
-    if(!user) throw new UnauthorizedError("Incorrect email or password");
+    if (!user) throw new UnauthorizedError("Incorrect email or password");
 
     ///create token to credentialsUser and return token.
     const token = cyber.createToken(user);
-    
+
     //return token:
     return token;
 
-} 
+}
 
 export default {
     register,

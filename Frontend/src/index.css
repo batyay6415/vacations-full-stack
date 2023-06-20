@@ -2,11 +2,32 @@ html, body, #root {
     height: 100%;
     text-align: center;
     font-size: x-large;
-    background-image: linear-gradient(magenta, darkmagenta);
-    color: white;
+    background-image: linear-gradient(aqua, pink);
+    color: black;
+    margin: 0;
+    padding: 0;
 }
 
 a {
     color: blue;
 }
 
+.Box {
+    display: inline-block;
+    border: 1px solid;
+    margin: 10px;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 5px 5px 10px;
+}
+
+form {
+    width: 300px;
+    text-align: left;
+}
+
+form > input, form > button {
+    width: 100%;
+    margin-bottom: 20px;
+    box-sizing: border-box;
+}

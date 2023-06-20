@@ -1,3 +1,6 @@
-.Layout {
-	
+
+.Layout > header {
+    grid-column: span 6;
 }
+
+

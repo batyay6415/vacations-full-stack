@@ -17,9 +17,9 @@ class CredentialsModel {
     });
 
     public validateLogin(): void {
-        
+
         const result = CredentialsModel.loginValidationSchema.validate(this);
-        if(result.error) throw new ValidationError(result.error.message);
+        if (result.error) throw new ValidationError(result.error.message);
     }
 
 }

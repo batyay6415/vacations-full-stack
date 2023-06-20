@@ -76,6 +76,41 @@
 					"request": {
 						"method": "POST",
 						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "destination",
+									"value": "los angeles",
+									"type": "default"
+								},
+								{
+									"key": "description",
+									"value": "very amazing ",
+									"type": "default"
+								},
+								{
+									"key": "startDate",
+									"value": "2023-06-01",
+									"type": "default"
+								},
+								{
+									"key": "endDate",
+									"value": "2023-06-05T21:00:00.000Z",
+									"type": "default"
+								},
+								{
+									"key": "price",
+									"value": "5600",
+									"type": "default"
+								},
+								{
+									"key": "image",
+									"type": "file",
+									"src": "/C:/Users/COMP987/Downloads/istockphoto-1290101405-170667a.jpg"
+								}
+							]
+						},
 						"url": {
 							"raw": "http://localhost:4000/api/vacations",
 							"protocol": "http",
@@ -86,6 +121,38 @@
 							"path": [
 								"api",
 								"vacations"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add follow",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJJZCI6MTIsImZpcnN0TmFtZSI6Ik5vYSIsImxhc3ROYW1lIjoiQ29oZW4gIiwiZW1haWwiOiJub2EyMTVAZ21haWwuY29tIiwicm9sZUlkIjoyfSwiaWF0IjoxNjg0NzcyMzQ3LCJleHAiOjE2ODQ3ODMxNDd9.xbB2gqR66LALTuI9CU6xgAzA8TJlyfxtV4EBnn0RPKk",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:4000/api/vacations/follow/3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"vacations",
+								"follow",
+								"3"
 							]
 						}
 					},
@@ -116,7 +183,7 @@
 				{
 					"name": "Update vacation",
 					"request": {
-						"method": "PUT",
+						"method": "PATCH",
 						"header": [],
 						"body": {
 							"mode": "raw",
@@ -144,8 +211,18 @@
 					"response": []
 				},
 				{
-					"name": "Get all vacation",
+					"name": "Get all vacations",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJJZCI6NCwiZmlyc3ROYW1lIjoiYmF0eWEiLCJsYXN0TmFtZSI6InllcnVzaGFsbWkiLCJlbWFpbCI6ImJhdHlhNjQxNUBnbWFpbC5jb20iLCJwYXNzd29yZCI6ImJ5MzY5OCIsInJvbGVJZCI6MX0sImlhdCI6MTY4MjQ0OTgwMSwiZXhwIjoxNjgyNDYwNjAxfQ.qdj6LVDsUN3sN8vK6_TiCyH0SkrFpgS1HYLN0dMln50",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -158,6 +235,69 @@
 							"path": [
 								"api",
 								"vacations"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get one vacation",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJJZCI6NCwiZmlyc3ROYW1lIjoiYmF0eWEiLCJsYXN0TmFtZSI6InllcnVzaGFsbWkiLCJlbWFpbCI6ImJhdHlhNjQxNUBnbWFpbC5jb20iLCJwYXNzd29yZCI6ImJ5MzY5OCIsInJvbGVJZCI6MX0sImlhdCI6MTY4MjQ0OTgwMSwiZXhwIjoxNjgyNDYwNjAxfQ.qdj6LVDsUN3sN8vK6_TiCyH0SkrFpgS1HYLN0dMln50",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:4000/api/vacations/6",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"vacations",
+								"6"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete follow",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJJZCI6MTIsImZpcnN0TmFtZSI6Ik5vYSIsImxhc3ROYW1lIjoiQ29oZW4gIiwiZW1haWwiOiJub2EyMTVAZ21haWwuY29tIiwicm9sZUlkIjoyfSwiaWF0IjoxNjg0NzcyNzEwLCJleHAiOjE2ODQ3ODM1MTB9.8X0iG8cOKN1-G03PWJ8ROJZhO29qOu-8btbNBQSm7Bk",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:4000/api/vacations/follow/20",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"vacations",
+								"follow",
+								"20"
 							]
 						}
 					},
@@ -201,7 +341,7 @@
 		"bearer": [
 			{
 				"key": "token",
-				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJJZCI6NCwiZmlyc3ROYW1lIjoiYmF0eWEiLCJsYXN0TmFtZSI6InllcnVzaGFsbWkiLCJlbWFpbCI6ImJhdHlhNjQxNUBnbWFpbC5jb20iLCJwYXNzd29yZCI6ImJ5MzY5OCIsInJvbGVJZCI6MX0sImlhdCI6MTY4MjE5ODczOCwiZXhwIjoxNjgyMjA5NTM4fQ.so-6DGuymco66SPZciCMtcXboi2eddI5Tg2BlQ6TZuk",
+				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJJZCI6MTIsImZpcnN0TmFtZSI6Ik5vYSIsImxhc3ROYW1lIjoiQ29oZW4gIiwiZW1haWwiOiJub2EyMTVAZ21haWwuY29tIiwicm9sZUlkIjoyfSwiaWF0IjoxNjg0NzczNjgzLCJleHAiOjE2ODQ3ODQ0ODN9.8B1MquehExpPipwNKCDHXdySc_AYRFc_Lu8ToruKBXQ",
 				"type": "string"
 			}
 		]

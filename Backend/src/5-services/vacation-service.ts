@@ -1,28 +1,53 @@
-import { ResourceNotFoundError } from "../2-models/client-errors";
+import { ResourceNotFoundError, ValidationError } from "../2-models/client-errors";
 import VacationModel from "../2-models/vacation-model";
 import appConfig from "../4-utils/app-config";
 import dal from "../4-utils/dal";
 import { OkPacket } from "mysql";
 import imageHandler from "../4-utils/image-handler";
 
-// Get all vacation ---- to home-page
-async function getAllVacation(): Promise<VacationModel[]> {
+// Get all vacations ---- to home-page for login or admin 
+async function getAllVacation(userId: number): Promise<VacationModel[]> {
 
-    const sql = `SELECT
-                    vacationId,
-                    destination,
-                    description ,
-                    startDate,
-                    endDate,
-                    price,
-                    CONCAT('${appConfig.imagesUrl}', imageName) AS imageUrl
-                FROM vacations`;
+    // Create sql: 
+    const sql = `SELECT DISTINCT
+    V.*,CONCAT('${appConfig.imagesUrl}', V.imageName) AS imageUrl,
+    EXISTS(SELECT * FROM follows WHERE vacationId = F.vacationId AND userId = ?) AS isFollowing,
+    COUNT(F.userId) AS followersCount
+    FROM vacations as V LEFT JOIN follows as F
+    ON V.vacationId = F.vacationId
+    GROUP BY vacationId
+    ORDER BY startDate`;
 
-    const vacations = await dal.execute(sql);
+    const vacations = await dal.execute(sql, [userId]);
 
     return vacations;
-
 }
+
+//Get one vacation by vacationId
+async function getOneVacation(vacationId: number): Promise<VacationModel> {
+
+    //get one vacation by id
+    const sql = `SELECT
+                        vacationId,
+                        destination,
+                        description,
+                        startDate,
+                        endDate,
+                        price ,
+                        CONCAT('${appConfig.imagesUrl}', imageName) AS imageUrl
+                        FROM vacations
+                        WHERE vacationId = ?`;
+
+    const vacations = await dal.execute(sql, [vacationId]);
+
+    const vacation = vacations[0];
+
+    // validate if the vacation was returned:
+    if (!vacation) throw new ResourceNotFoundError(vacationId);
+
+    return vacation;
+
+};
 
 //Add new vacation option to admin : 
 async function addNewVacation(vacation: VacationModel): Promise<VacationModel> {
@@ -32,7 +57,7 @@ async function addNewVacation(vacation: VacationModel): Promise<VacationModel> {
 
     let imageName = null;
 
-    if(vacation.image){
+    if (vacation.image) {
 
         //Save image:
         imageName = await imageHandler.saveImage(vacation.image);
@@ -41,12 +66,12 @@ async function addNewVacation(vacation: VacationModel): Promise<VacationModel> {
         vacation.imageUrl = appConfig.imagesUrl + imageName;
     }
 
-    //Create query
+    //Create query----
     const sql = "INSERT INTO vacations VALUES(DEFAULT, ?, ?, ?, ?, ?, ?)";
 
     const result: OkPacket = await dal.execute(sql,
         [vacation.destination, vacation.description, vacation.startDate,
-             vacation.endDate, vacation.price, imageName])
+        vacation.endDate, vacation.price, imageName])
 
     vacation.vacationId = result.insertId;
 
@@ -56,7 +81,7 @@ async function addNewVacation(vacation: VacationModel): Promise<VacationModel> {
 
 }
 
-//Update vacation 
+//Update vacation option to admin 
 async function updateVacation(vacation: VacationModel): Promise<VacationModel> {
 
     //TODO : Validation joi
@@ -66,15 +91,16 @@ async function updateVacation(vacation: VacationModel): Promise<VacationModel> {
     let imageName = await getVacationImageName(vacation.vacationId);
 
     //If user send image to update
-    if(vacation.image){
+    if (vacation.image) {
 
         //Update image:
-        imageName = await imageHandler.updateImage(vacation.image , imageName)
+        imageName = await imageHandler.updateImage(vacation.image, imageName)
 
     }
+
     //Set back Image url:
     vacation.imageUrl = appConfig.imagesUrl + imageName;
-    
+
     // Create query: 
     const sql = `UPDATE vacations SET
         destination = ?,
@@ -89,17 +115,18 @@ async function updateVacation(vacation: VacationModel): Promise<VacationModel> {
     const result: OkPacket = await dal.execute(sql,
         [vacation.destination, vacation.description, vacation.startDate,
         vacation.endDate, vacation.price, imageName, vacation.vacationId])
-    
-    //If vacation not found
+
+    //If vacation not found:
     if (result.affectedRows === 0) throw new ResourceNotFoundError(vacation.vacationId);
 
-    //Remove image file from returned vacation
+    //Remove image file from returned vacation:
     delete vacation.image;
 
     return vacation;
 
 }
-//Delete from array 
+
+//Delete from array of vacation - option to admin  
 async function deleteVacation(id: number): Promise<void> {
 
     //Take original image name:
@@ -115,61 +142,33 @@ async function deleteVacation(id: number): Promise<void> {
 
 }
 
+// Get product image name from db:
+async function getVacationImageName(id: number): Promise<string> {
 
-async function getVacationImageName(id: number): Promise<string>{
-
+    // Create query: 
     const sql = `SELECT imageName FROM vacations WHERE vacationId = ? `;
 
-    const vacations = await dal.execute(sql , [id]);
+    // Get products: 
+    const vacations = await dal.execute(sql, [id]);
 
+    // Extract first product: 
     const vacation = vacations[0];
 
-    if(!vacation) return null;
+    // If id not found: 
+    if (!vacation) return null;
 
+    // Get image name: 
     const imageName = vacation.imageName;
 
+    // Return: 
     return imageName;
-
 }
-
-
-async function getVacationNotStart(date: string): Promise<VacationModel[]>{
-
-    const sql = `SELECT * FROM vacations WHERE startDate > CURDATE()`;
-
-    const vacations = await dal.execute(sql , [date]);
-
-    return vacations;
-}
-
-async function gatVacationActive(): Promise<VacationModel[]>{
-
-    const sql = `SELECT * FROM vacations WHERE startDate < CURDATE() AND endDate > CURDATE()`;
-
-    const vacations = await dal.execute(sql);
-
-    return vacations;
- 
-}
-
-async function getVacationFollow(): Promise<VacationModel[]>{
-
-    const sql = `SELECT * FROM vacations
-    INNER JOIN followers ON items.id = followers.item_id
-    WHERE followers.follower_id = 1 `;
-
-
-    return null;
-}
-
 
 export default {
     getAllVacation,
+    getOneVacation,
     addNewVacation,
     updateVacation,
     deleteVacation,
-    getVacationNotStart,
-    gatVacationActive,
-    getVacationFollow
 };
 

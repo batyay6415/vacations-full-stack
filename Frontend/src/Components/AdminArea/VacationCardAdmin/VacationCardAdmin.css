@@ -1,0 +1,98 @@
+.VacationCardAdmin {
+    display: inline-block;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 310px;
+    height: 500px;
+    margin: 5px;
+}
+
+/* Add some shadows to create a card effect */
+.VacationCardAdmin  {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    margin: 20px;
+    padding: 10px;
+}
+
+.VacationCardAdmin .Destination {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: bolder;
+    color: blueviolet;
+    text-align: left;
+    margin-bottom: 0px;
+    margin-top: 5px;
+}
+
+.VacationCardAdmin .Description {
+    color: grey;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    text-align: justify;
+    margin-top: 10px;
+    min-height: 70px;
+    word-wrap: break-word;
+    font-size: small;
+}
+
+.VacationCardAdmin Img {
+    width: 260px;
+    height: 130px;
+    border-radius: 10px;
+    display: block;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.VacationCardAdmin .Details {
+    min-height: 180px;
+    grid-column: auto;
+    grid-row: 45%;
+}
+.VacationCardAdmin .Dates {
+    font-size: 20px;
+}
+.VacationCardAdmin p {
+    text-align: center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.VacationCardAdmin .Price {
+    margin-bottom: 0px;
+    font-weight: bold;
+}
+
+.VacationCardAdmin .CheckboxDiv {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+    margin-bottom: 0px;
+}
+
+.VacationCardAdmin .BtnAdminDiv {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0px;
+}
+
+.VacationCardAdmin .BtnDelete {
+    border: none;
+    margin-right: 50px;
+    margin-left: 0px;
+    background: transparent;
+    padding: 0px;
+    width: 80px;
+    font-family: cursive;
+    color: blueviolet;
+    font-size: medium;
+}
+
+.VacationCardAdmin >a {
+    color: blueviolet;
+    text-decoration: none;
+    font-family: cursive;
+}
+
+
+
+
+
